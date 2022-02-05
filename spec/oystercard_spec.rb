@@ -27,17 +27,17 @@ describe Oystercard do
     end
   end
 
-  describe "#deduct" do
-    it "oyster card should respond to deduct moeny" do
-      expect(subject).to respond_to(:deduct).with(1).argument
-    end
+  # describe "#deduct" do
+  #   it "oyster card should respond to deduct moeny" do
+  #     expect(subject).to respond_to(:deduct).with(1).argument
+  #   end
 
-    it "should deduct money from the oyster card" do
-      subject.top_up(20)
-      expect{ subject.deduct(5)}.to change{ subject.balance}.by (-5)
-    end
+  #   it "should deduct money from the oyster card" do
+  #     subject.top_up(20)
+  #     expect{ subject.deduct(5)}.to change{ subject.balance}.by (-5)
+  #   end
 
-  end
+  # end
 
   # describe "#in_journey?" do
     
@@ -83,6 +83,12 @@ describe Oystercard do
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
+    end
+
+    it "Can deduct fare when touch_out" do
+      subject.top_up(5)
+      subject.touch_in
+      expect {subject.touch_out}.to change{subject.balance}.by -1
     end
   end
 end
