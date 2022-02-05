@@ -53,13 +53,20 @@ describe Oystercard do
     end
 
     it "Card is in_journey" do
+      subject.top_up(5)
       expect(subject.touch_in).to eq true
     end
 
     it "can touch in" do
+    subject.top_up(5)
       subject.touch_in
       expect(subject).to be_in_journey
     end
+
+    it "can not touch in if limit below min_value" do
+      expect{ subject.touch_in}.to raise_error{'insufficent funds please top up to have a min fare of at least #{MIN_LIMIT}'}
+    end
+
   end
 
   describe "#touch_out" do
@@ -72,6 +79,7 @@ describe Oystercard do
     end
 
     it "can touch out" do
+      subject.top_up(5)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
