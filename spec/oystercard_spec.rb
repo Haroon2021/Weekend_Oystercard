@@ -39,14 +39,43 @@ describe Oystercard do
 
   end
 
-  describe "#in_journey?" do
+  # describe "#in_journey?" do
     
-    it "create an oyster card and check if its in journey, it should not be in journey" do
-      #expect(subject.in_journey?).to eq false
-      expect(subject).not_to be_in_journey
+  #   it "create an oyster card and check if its in journey, it should not be in journey" do
+  #     #expect(subject.in_journey?).to eq false
+  #     expect(subject).not_to be_in_journey
+  #   end
+  # end
+
+  describe "#touch_in" do
+    it "Oystercard can touch_in" do
+      expect(subject).to respond_to(:touch_in)
+    end
+
+    it "Card is in_journey" do
+      expect(subject.touch_in).to eq true
+    end
+
+    it "can touch in" do
+      subject.touch_in
+      expect(subject).to be_in_journey
     end
   end
 
+  describe "#touch_out" do
+    it "Oystercard can touch_out" do
+      expect(subject).to respond_to(:touch_out)
+    end
 
+    it "Card is not in_journey when you touch_out" do
+      expect(subject.touch_out).to eq false
+    end
+
+    it "can touch out" do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).not_to be_in_journey
+    end
+  end
 end
 
