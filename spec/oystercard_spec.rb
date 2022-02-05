@@ -21,10 +21,32 @@ describe Oystercard do
     end
 
     it "should not top up more than the max balance" do
-      subject.top_up(90)
+      maximum_balance = Oystercard::MAX_LIMIT 
+      subject.top_up(maximum_balance)
       expect{ subject.top_up(1)}.to raise_error{'Maximum balance is #{MAX_LIMIT}, please do not exceed this limit'} 
+    end
+  end
+
+  describe "#deduct" do
+    it "oyster card should respond to deduct moeny" do
+      expect(subject).to respond_to(:deduct).with(1).argument
+    end
+
+    it "should deduct money from the oyster card" do
+      subject.top_up(20)
+      expect{ subject.deduct(5)}.to change{ subject.balance}.by (-5)
     end
 
   end
+
+  describe "#in_journey?" do
+    
+    it "create an oyster card and check if its in journey, it should not be in journey" do
+      #expect(subject.in_journey?).to eq false
+      expect(subject).not_to be_in_journey
+    end
+  end
+
+
 end
 
